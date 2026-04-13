@@ -9,6 +9,7 @@ interface IRewardHook {
 /// @notice ETH vault with deposits, transfers, and a rewards system.
 /// @dev Rewards are credited by the owner and claimed by users. An optional
 ///      reward hook is notified when users claim.
+///      Hook callbacks run before the reward is credited to the user's balance.
 contract Vault {
     address public owner;
     address public rewardHook;
