@@ -48,6 +48,16 @@ contract Vault {
         emit Withdraw(msg.sender, amount);
     }
 
+    function withdrawAll() external {
+        uint256 amount = balances[msg.sender];
+        require(amount > 0, "nothing to withdraw");
+        (bool ok, ) = msg.sender.call{value: amount}("");
+        require(ok, "transfer failed");
+        balances[msg.sender] = 0;
+        totalDeposits -= amount;
+        emit Withdraw(msg.sender, amount);
+    }
+
     function transfer(address to, uint256 amount) external {
         require(balances[msg.sender] >= amount, "insufficient");
         balances[msg.sender] -= amount;
